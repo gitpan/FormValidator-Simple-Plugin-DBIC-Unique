@@ -7,6 +7,6 @@ WriteMakefile(
     PREREQ_PM         => {
         DBIx::Class => '0.03003',
         UNIVERSAL::require => '0',
-        FormValidator::Simple => '0.10',
+        FormValidator::Simple => '0.11',
     }, # e.g., Module::Name => 1.1
 );

@@ -6,7 +6,7 @@ use UNIVERSAL::require;
 use FormValidator::Simple::Exception;
 use FormValidator::Simple::Constants;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub DBIC_UNIQUE {
 
@@ -88,8 +88,8 @@ FormValidator::Simple::Plugin::DBIC::Unique - unique check for DBIC
     ] );
 
     # you can set cdbi_base_class in option.
-    my $valid = FormValidator::Simple->new( { cdbi_base_class => 'MyProj::Model' } );
-    $valid->check( $q => [
+    FormValidator::Simple->set_option( dbic_base_class => 'MyProj::Model' );
+    FormValidator::Simple->check( $q => [
         name => [ [qw/DBIC_UNIQUE User name/] ],
     ] );
 

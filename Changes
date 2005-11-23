@@ -1,5 +1,8 @@
 Revision history for Perl extension FormValidator::Simple::Plugin::DBIC::Unique.
 
+0.03  Thu Nov 24 00:00:53 2005
+    - fixed typo ( Thanks to Masahiro Nagano ) 
+
 0.02  Fri Nov 18 00:00:53 2005
     - CPAN release version
 
