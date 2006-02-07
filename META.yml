@@ -1,11 +1,11 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         FormValidator-Simple-Plugin-DBIC-Unique
-version:      0.03
+version:      0.04
 version_from: lib/FormValidator/Simple/Plugin/DBIC/Unique.pm
 installdirs:  site
 requires:
-    DBIx::Class:                   0.03003
+    DBIx::Class:                   0.05
     FormValidator::Simple:         0.11
     UNIVERSAL::require:            0
 

@@ -6,7 +6,7 @@ use UNIVERSAL::require;
 use FormValidator::Simple::Exception;
 use FormValidator::Simple::Constants;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub DBIC_UNIQUE {
 
@@ -34,11 +34,12 @@ sub DBIC_UNIQUE {
         qq/Validation DBIC_UNIQUE: faild to require $table. "$@"/
         );
     }
-    unless ( UNIVERSAL::isa( $table => 'DBIx::Class::Table' ) ) {
-        FormValidator::Simple::Exception->throw(
-        qq/Validation DBIC_UNIQUE: set DBIC table class as first argument./
-        );
-    }
+    # XXX: DBIx::Class 0.05 doesn't use DBIx::Class::Table
+    # unless ( UNIVERSAL::isa( $table => 'DBIx::Class::Table' ) ) {
+    #    FormValidator::Simple::Exception->throw(
+    #    qq/Validation DBIC_UNIQUE: set DBIC table class as first argument./
+    #    );
+    # }
     my %criteria = ();
     for ( my $i = 0; $i < scalar(@$args); $i++ ) {
         my $key   = $args->[$i];

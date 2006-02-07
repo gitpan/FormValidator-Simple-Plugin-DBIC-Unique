@@ -5,7 +5,7 @@ WriteMakefile(
     NAME              => 'FormValidator::Simple::Plugin::DBIC::Unique',
     VERSION_FROM      => 'lib/FormValidator/Simple/Plugin/DBIC/Unique.pm', # finds $VERSION
     PREREQ_PM         => {
-        DBIx::Class => '0.03003',
+        DBIx::Class => '0.05',
         UNIVERSAL::require => '0',
         FormValidator::Simple => '0.11',
     }, # e.g., Module::Name => 1.1

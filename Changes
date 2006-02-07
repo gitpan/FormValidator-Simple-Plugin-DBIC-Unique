@@ -1,5 +1,9 @@
 Revision history for Perl extension FormValidator::Simple::Plugin::DBIC::Unique.
 
+0.04  Tue Feb 7 23:00:00 2005
+    - remove table-class verifying for DBIx::Class 0.05
+      ( Thanks to Hideo Kimura )
+
 0.03  Thu Nov 24 00:00:53 2005
     - fixed typo ( Thanks to Masahiro Nagano ) 
 
