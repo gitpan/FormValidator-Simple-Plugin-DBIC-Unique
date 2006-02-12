@@ -3,10 +3,11 @@ use strict;
 use warnings;
 use UNIVERSAL;
 use UNIVERSAL::require;
+use Scalar::Util qw/blessed/;
 use FormValidator::Simple::Exception;
 use FormValidator::Simple::Constants;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 sub DBIC_UNIQUE {
 
@@ -18,28 +19,23 @@ sub DBIC_UNIQUE {
         .qq/Set name of DBIC table class and unique column(s). /
         );
     }
-
     my $table = shift @$args;
     unless ( scalar(@$params) == scalar(@$args) ) {
         FormValidator::Simple::Exception->throw(
         qq/Validation DBIC_UNIQUE: number of keys and validation arguments aren't same/
         );
     }
-    if ( $class->options->{dbic_base_class} ) {
-        $table = $class->options->{dbic_base_class}."::".$table;
+    unless ( blessed($table) and $table->can('count') ) {
+        if ( $class->options->{dbic_base_class} ) {
+            $table = $class->options->{dbic_base_class}."::".$table;
+        }
+        $table->require;
+        if ($@) {
+            FormValidator::Simple::Exception->throw(
+                qq/Validation DBIC_UNIQUE: failed to require $table. "$@"/
+            );
+        }
     }
-    $table->require;
-    if ($@) {
-        FormValidator::Simple::Exception->throw(
-        qq/Validation DBIC_UNIQUE: faild to require $table. "$@"/
-        );
-    }
-    # XXX: DBIx::Class 0.05 doesn't use DBIx::Class::Table
-    # unless ( UNIVERSAL::isa( $table => 'DBIx::Class::Table' ) ) {
-    #    FormValidator::Simple::Exception->throw(
-    #    qq/Validation DBIC_UNIQUE: set DBIC table class as first argument./
-    #    );
-    # }
     my %criteria = ();
     for ( my $i = 0; $i < scalar(@$args); $i++ ) {
         my $key   = $args->[$i];
@@ -92,6 +88,22 @@ FormValidator::Simple::Plugin::DBIC::Unique - unique check for DBIC
     FormValidator::Simple->set_option( dbic_base_class => 'MyProj::Model' );
     FormValidator::Simple->check( $q => [
         name => [ [qw/DBIC_UNIQUE User name/] ],
+    ] );
+
+    # you also can pass resultset object.
+
+    # in catalyst application,
+    FormValidator::Simple->check( $q => [
+        name => [ ['DBIC_UNIQUE', $c->model('Schema::User'), 'username' ] ],
+    ] );
+    
+    # in case you use schema,
+    FormValidator::Simple->check( $q => [
+        name => [ [ 'DBIC_UNIQUE', $c->model('Schema')->resultset('User'), 'username' ] ],
+    ] );
+    
+    FormValidator::Simple->check( $q => [
+        name => [ [ 'DBIC_UNIQUE', $schema->resultset('User'), 'username' ] ],
     ] );
 
 =head1 DESCRIPTION

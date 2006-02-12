@@ -8,5 +8,6 @@ WriteMakefile(
         DBIx::Class => '0.05',
         UNIVERSAL::require => '0',
         FormValidator::Simple => '0.11',
+        Scalar::Util => 0,
     }, # e.g., Module::Name => 1.1
 );
